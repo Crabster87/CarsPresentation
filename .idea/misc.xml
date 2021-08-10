@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_car_add_form.xml" value="0.25" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_car_edit.xml" value="0.33" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_car_edit_remove_form.xml" value="0.33" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_car_form.xml" value="0.4078125" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_car_form2.xml" value="0.4078125" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_full_screen.xml" value="0.25" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_full_screen_image.xml" value="0.2677083333333333" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/fragment_recycler_list.xml" value="0.10648148148148148" />
+        <entry key="..\:/Users/iar87/Desktop/Projects/CarsPresentation/app/src/main/res/layout/single_car.xml" value="0.33" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
