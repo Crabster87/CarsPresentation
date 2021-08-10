@@ -111,8 +111,4 @@ public class CarDbManager {
                  new String[]{String.valueOf(stringImageId)});
     }
 
-//    public void removeDb() {
-//        db.execSQL("DROP TABLE IF EXISTS '" + CarDbSchema.CarTable.NAME + "'");
-//    }
-
 }

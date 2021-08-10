@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
         Button addCarButton = findViewById(R.id.add_new_car_button);
         addCarButton.setOnClickListener(v -> {
-//            CarDbManager manager = new CarDbManager(this);
-//            manager.removeDb();
             Intent intent = new Intent(this, CarAddFormActivity.class);
             startActivity(intent);
         });
@@ -145,15 +143,6 @@ public class MainActivity extends AppCompatActivity {
             carPriceTextView.setOnClickListener(groupOnClickListener);
             carPowerTextView.setOnClickListener(groupOnClickListener);
         }
-
-//        @Override
-//        public void onClick(View view) {
-//            Intent intent = new Intent(MainActivity.this, FullScreenActivity.class);
-//            intent.putExtra("imageViewId", R.id.car_image);
-//            startActivity(intent);
-//            InformationDialogFragment dialog = new InformationDialogFragment();
-//            dialog.show(getSupportFragmentManager(), "Information");
-//        }
 
     }
 

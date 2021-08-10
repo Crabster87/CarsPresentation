@@ -12,8 +12,8 @@ import crabster.rudakov.carspresentation.R;
 public class FullScreenActivity extends AppCompatActivity {
 
     /**
-     * Используя библиотеку 'davemorrissey' отображаем на отдельном макете переданное изображение.
-     * Изображение можно масштабировать
+     * Используя библиотеку 'Subsampling Scale Image View' отображаем на отдельном
+     * макете переданное изображение. Изображение можно масштабировать
      * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
