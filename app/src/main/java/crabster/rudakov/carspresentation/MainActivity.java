@@ -16,12 +16,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import crabster.rudakov.carspresentation.carAddActivity.CarAddFormActivity;
 import crabster.rudakov.carspresentation.carDataBase.CarDbHelper;
 import crabster.rudakov.carspresentation.carDataBase.CarDbManager;
+import crabster.rudakov.carspresentation.carDataBase.CarDbSchema;
 import crabster.rudakov.carspresentation.carEditRemoveActivity.CarEditRemoveFormActivity;
 import crabster.rudakov.carspresentation.fullScreenActivity.FullScreenActivity;
 import crabster.rudakov.carspresentation.recyclerViewHelpers.Car;
@@ -31,13 +31,12 @@ import crabster.rudakov.carspresentation.recyclerViewHelpers.SimpleItemTouchHelp
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private List<Car> cars = new ArrayList<>();
     private CarAdapter carAdapter;
 
     /**
      * Помимо стандартных функций создаём базу данных, если её ещё не существует, берём из неё
      * список авто, устанавливаем для RecyclerView адаптер со списком. А также инициализируем
-     * активность по добавлению нового автомобиля
+     * активность по добавлению нового автомобиля и устанавливаем листенер для сортировки по модели
      * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +50,7 @@ public class MainActivity extends AppCompatActivity {
         SQLiteDatabase db = openOrCreateDatabase(CarDbHelper.DATABASE_NAME, MODE_PRIVATE, null);
         dbHelper.onCreate(db);
 
-        cars = new CarDbManager(this).getCarList();
-        carAdapter = new CarAdapter(cars);
-        recyclerView.setAdapter(carAdapter);
+        displayCarList(null);
 
         Button addCarButton = findViewById(R.id.add_new_car_button);
         addCarButton.setOnClickListener(v -> {
@@ -61,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        TextView header_model = findViewById(R.id.header_model);
+        header_model.setOnClickListener(v -> displayCarList(CarDbSchema.Columns.MODEL));
     }
 
     /**
@@ -70,14 +69,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        CarDbManager manager = new CarDbManager(this);
-        cars = manager.getCarList();
-        carAdapter = new CarAdapter(cars);
-        recyclerView.setAdapter(carAdapter);
+        displayCarList(null);
 
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(carAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(recyclerView);
+    }
+
+    /**
+     * Получаем список, отсортированный по заданной колонке и передаем его адаптеру для отображения
+     * */
+    private void displayCarList(String orderBy) {
+        CarDbManager manager = new CarDbManager(this);
+        List<Car> cars = manager.getCarList(orderBy);
+        carAdapter = new CarAdapter(cars);
+        recyclerView.setAdapter(carAdapter);
     }
 
     public class CarHolder extends RecyclerView.ViewHolder {

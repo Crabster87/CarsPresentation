@@ -43,34 +43,32 @@ public class CarDbManager {
     }
 
     /**
-     * С помощью специального объекта, проходя по каждой строке таблицы БД,
-     * получаем список имеющихся авто
+     * С помощью специального объекта, проходя по каждой строке таблицы БД, получаем список
+     * имеющихся авто, отсортированный по нужному параметру
      * */
-    public List<Car> getCarList() {
-        CarCursorWrapper cursorWrapper = queryCars();
-        try {
+    public List<Car> getCarList(String orderBy) {
+        try (CarCursorWrapper cursorWrapper = queryCars(orderBy)) {
             cursorWrapper.moveToFirst();
             while (!cursorWrapper.isAfterLast()) {
                 Car car = cursorWrapper.getCar();
                 cars.add(car);
                 cursorWrapper.moveToNext();
             }
-        } finally {
-            cursorWrapper.close();
         }
         return cars;
     }
 
     /**
-     * Специальным запросом к БД получаем объект для дальнейшей обработки данных
+     * Специальным запросом к БД получаем объект для дальнейшей обработки данных, в параметре метода
+     * указываем наименование колонки, по которой хотим отсортировать полученный список
      * */
-    private CarCursorWrapper queryCars() {
+    private CarCursorWrapper queryCars(String orderBy) {
         Cursor cursor = db.query(CarDbSchema.CarTable.NAME, null
                                                           , null
                                                           , null
                                                           , null
                                                           , null
-                                                          , null);
+                                                          , orderBy);
         return new CarCursorWrapper(cursor);
     }
 
@@ -97,7 +95,7 @@ public class CarDbManager {
         String stringImageId = String.valueOf(imageId);
         db.delete(CarDbSchema.CarTable.NAME,
        CarDbSchema.Columns.IMAGE_ID + "=?",
-                 new String[]{String.valueOf(imageId)});
+                 new String[]{stringImageId});
     }
 
     /**

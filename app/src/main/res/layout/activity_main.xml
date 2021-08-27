@@ -40,7 +40,7 @@
             android:id="@+id/header_model"
             style="@style/SingleCarRecyclerView"
             android:layout_weight="2"
-            android:text="MODEL" />
+            android:text="MODEL &#11015;" />
 
         <TextView
             android:id="@+id/header_price"
