@@ -13,9 +13,6 @@
             android:name=".carEditActivity.CarEditActivity"
             android:exported="true" />
         <activity
-            android:name=".carEditRemoveActivity.CarEditRemoveFormActivity"
-            android:exported="true" />
-        <activity
             android:name=".fullScreenActivity.FullScreenActivity"
             android:exported="true" />
         <activity

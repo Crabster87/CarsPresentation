@@ -22,7 +22,7 @@ import crabster.rudakov.carspresentation.carAddActivity.CarAddFormActivity;
 import crabster.rudakov.carspresentation.carDataBase.CarDbHelper;
 import crabster.rudakov.carspresentation.carDataBase.CarDbManager;
 import crabster.rudakov.carspresentation.carDataBase.CarDbSchema;
-import crabster.rudakov.carspresentation.carEditRemoveActivity.CarEditRemoveFormActivity;
+import crabster.rudakov.carspresentation.carEditActivity.CarEditActivity;
 import crabster.rudakov.carspresentation.fullScreenActivity.FullScreenActivity;
 import crabster.rudakov.carspresentation.recyclerViewHelpers.Car;
 import crabster.rudakov.carspresentation.recyclerViewHelpers.ItemTouchHelperAdapter;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
      * Помимо стандартных функций создаём базу данных, если её ещё не существует, берём из неё
      * список авто, устанавливаем для RecyclerView адаптер со списком. А также инициализируем
      * активность по добавлению нового автомобиля и устанавливаем листенер для сортировки по модели
-     * */
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Реализуем отрисовку обновлённого списка после добавления, редактирования или удаления авто.
      * А также после перетягивания элеметнов списка и их удаления с экрана
-     * */
+     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Получаем список, отсортированный по заданной колонке и передаем его адаптеру для отображения
-     * */
+     */
     private void displayCarList(String orderBy) {
         CarDbManager manager = new CarDbManager(this);
         List<Car> cars = manager.getCarList(orderBy);
@@ -133,7 +133,8 @@ public class MainActivity extends AppCompatActivity {
 
         /**
          * Назначаем слушатель клика на все части CardView кроме изображения, инициализируем
-         * активность по редактированию данных
+         * активность по редактированию данных в случае короткого клика и вызов контекстного
+         * меню для удаления авто из базы данных в случае длительного клика
          * */
         public void initCarEditRemoveActivity() {
             carModelTextView = itemView.findViewById(R.id.car_model);
@@ -141,13 +142,23 @@ public class MainActivity extends AppCompatActivity {
             carPowerTextView = itemView.findViewById(R.id.car_power);
 
             View.OnClickListener groupOnClickListener = v -> {
-                Intent intentEdit = new Intent(MainActivity.this, CarEditRemoveFormActivity.class);
+                Intent intentEdit = new Intent(MainActivity.this, CarEditActivity.class);
                 intentEdit.putExtra("car", car);
                 startActivity(intentEdit);
             };
             carModelTextView.setOnClickListener(groupOnClickListener);
             carPriceTextView.setOnClickListener(groupOnClickListener);
             carPowerTextView.setOnClickListener(groupOnClickListener);
+
+            View.OnCreateContextMenuListener groupOnCreateContextMenuListener = (menu, v, menuInfo) ->
+                             menu.add("DELETE CAR").setOnMenuItemClickListener(item -> {
+                             new CarDbManager(MainActivity.this).removeCar(car.getImageId());
+                             onResume();
+                             return false;
+            });
+            carModelTextView.setOnCreateContextMenuListener(groupOnCreateContextMenuListener);
+            carPriceTextView.setOnCreateContextMenuListener(groupOnCreateContextMenuListener);
+            carPowerTextView.setOnCreateContextMenuListener(groupOnCreateContextMenuListener);
         }
 
     }
